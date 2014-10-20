@@ -1,0 +1,102 @@
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_Initialize : called
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_NewStream : called for instance 9955bc0, stream 99707e0, URL https://bb.its.iastate.edu/bbcswebdav/pid-749832-dt-content-rid-12772413_1/courses/F2012-CPR_E-308_-ALL/CprE308.Fat12.F12%281%29.pdf, stream size 135975, seekable 1
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 0, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 16384, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 32768, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 49152, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 65536, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 81920, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 98304, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 114688, length = 16384, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9955bc0, stream 99707e0, offset = 131072, length = 4903, streamlength = 135975
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_StreamAsFile : called for instance 9955bc0 and stream 99707e0, filename /home/mmallett/.mozilla/firefox/umkrsr19.default/Cache/B/57/D32CDd01
+NPP_DestroyStream : called for instance 9955bc0 and stream 99707e0
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_GetValue is called
+NPP_GetValue is called
+NPP_SetWindow : called for instance 9973b48
+Window from browser - 31457284
+NPP_SetWindow : called for instance 9973b48
+Window from browser - 31457284
+NPP_SetWindow : called for instance 9973b48
+Window from browser - 31457284
+NPP_NewStream : called for instance 9973b48, stream 9973a90, URL https://bb.its.iastate.edu/bbcswebdav/pid-660898-dt-content-rid-11874067_1/courses/F2012-CPR_E-308_-ALL/Course%20Syllabus.pdf, stream size 46983, seekable 1
+NPP_Write : called for instance 9973b48, stream 9973a90, offset = 0, length = 16384, streamlength = 46983
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9973b48, stream 9973a90, offset = 16384, length = 16384, streamlength = 46983
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_Write : called for instance 9973b48, stream 9973a90, offset = 32768, length = 14215, streamlength = 46983
+Trying for window attributes
+Trying for query tree
+NPP_Write : will wait for NPP_StreamAsFile
+NPP_StreamAsFile : called for instance 9973b48 and stream 9973a90, filename /home/mmallett/.mozilla/firefox/umkrsr19.default/Cache/1/F6/B8B6Fd01
+NPP_DestroyStream : called for instance 9973b48 and stream 9973a90
+NPP_SetWindow : called for instance 9973b48
+Window from browser - 31457284
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_SetWindow : called for instance 9955bc0
+Window from browser - 31457282
+NPP_Destroy : called for instance 9955bc0
+NPP_Destroy : called for instance 9973b48

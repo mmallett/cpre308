@@ -1,0 +1,9 @@
+getopt(int argc, char** argv, char * optstring);
+
+man 3 getopt
+
+#ifndef ____MYHEADERFILE__________
+#include ___MYHEADERFILE____
+
+#endif
+

@@ -1,0 +1,16 @@
+evolve(i,j)
+    int living_neighbors = 0
+    
+    check up left       i-1 j-1
+    check up            i-1    
+    check up right      i-1 j+1
+    check left          j-1
+    check right         j+1
+    check down left     j-1 i+1
+    check down          i+1
+    check down right    i+i j+1
+
+    at any time if i' < 0 or i' >= grid size
+        return 0
+    at any time if j' < 0 or j' >= grid size
+        return 0

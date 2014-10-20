@@ -1,0 +1,184 @@
+#include "shell.h"
+
+void parse(char * input, command_t * mycmd)
+{
+    printf("%Printing input: s\n",input);
+    char * buffer = (char *) malloc(100 * sizeof(char));
+    printf("Buffer allocated\n");
+    strcpy(buffer,strtok(input," \t"));
+    printf(" %s\n",buffer);/*
+    mycmd -> argv[0] = (char *) malloc((strlen(buffer) + 2) * sizeof(char));
+    strcpy(mycmd -> argv[0], buffer);
+    printf("FLAG 2\n");
+    printf("%s",mycmd -> argv[0]);
+    //mycmd -> argv[0] = strtok(input," \t");
+    char * str = mycmd -> argv[1];
+    while( != NULL)
+    {
+        //if(i==MAX_ARG_COUNT)
+            //break;
+        ptr = strtok(NULL," \t");
+	printf("FLAG 3 %s\n",ptr);
+        strcpy(str,ptr);
+	str++;
+	printf("FLAG 4\n");
+    }*/
+
+        
+                
+	//no arguments given
+	/*if(!str_contains(input,' ') && !str_contains(input,'\t'))
+	{
+		strcpy(mycmd -> cmd,input);
+	}*/
+	/*else
+	{
+	    
+		for(i = 0; i <  strlen(input); i++)
+		{
+			if(input[i] == ' ' || input[i] == '\t')
+			{
+                char * substr;
+                substring(input,substr,0,i);
+				strcpy(mycmd -> cmd,substr);
+                free(substr);
+				last_space = i;
+				break;
+			}
+   		}*/
+        //access the memory that holds the pointers to the strings
+       /* char *** j = &(mycmd -> argv);
+        for(i = last_space; i < strlen(input); i++)
+        {
+            if(input[i] == ' ' || input[i] == '\t')
+            {
+                printf("I FINDED A SPACE AT %d",i);
+                char * tmp;
+                substring(input,tmp,last_space,i);
+                **j = (char*) malloc((strlen(tmp) + 1) * sizeof(char));
+                strcpy(**j,tmp);
+                j++;
+                free(tmp);
+                last_space = i;
+            }
+        }
+        **j = NULL;*/
+	//}
+}
+
+	//tokenize input
+	/*char my_input[40];
+	memcpy(my_input,input,strlen(input)+1);
+	char * token = strtok(my_input," ");*/
+
+	//set command type, check for invalid input
+	/*
+	if(token == NULL)
+	{
+		ret.type = error;
+		return ret;
+	}
+	if(strcmp(token,"cd") == 0)
+	{
+		ret.type = cd;
+	}
+	else if(strcmp(token,"cwd") == 0)
+	{
+		ret.type = cwd;
+	}
+	else if(strcmp(token,"exit") == 0)
+	{
+		ret.type = quit;
+	}
+	else if(strcmp(token,"history") == 0)
+	{
+		ret.type = history;
+	}
+	else if(strcmp(token,"pid") == 0)
+	{
+		ret.type = pid;
+	}
+	else if(strcmp(token,"ppid") == 0)
+	{
+		ret.type = ppid;
+	}
+	else
+	{
+		ret.type = custom;
+		ret.path = token;
+	}
+
+	//parse through remaining arguments
+	int argc = 0;
+	char args[80];
+	char * last;
+	while(token != NULL)
+	{
+		token = strtok(NULL," ");
+		argc++;
+		last = token;
+		strcat(args,token);
+	}
+
+	ret.args = args;
+	ret.argc = argc;
+
+	if(last[0] == '&')
+	{
+		ret.block = 0;
+	}
+	else
+	{
+		ret.block = 1;
+	}
+
+	return ret;*/
+//}
+
+int str_contains(char * s, char c)
+{
+	int l = strlen(s);
+	int i;
+	for(i = 0; i < l; i++)
+	{
+		if(s[i] == c)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void substring(char * source, char * substring, int start, int end)
+{ 
+	substring = (char*) malloc((end - start + 1) * sizeof(char));
+	int i;
+	for(i = start; i < end; i++)
+	{
+		substring[i] = source[i];
+	}
+	substring[i+1] = '\0';
+}
+
+command_t* alloc_command_t()
+{
+	command_t* ret = (command_t*) malloc(sizeof(command_t));
+	ret -> argv = (char**) malloc(MAX_ARG_COUNT * sizeof(char*));
+    int i;    
+    for(i = 0; i < MAX_ARG_COUNT; i++)
+    {
+        ret -> argv[i] = (char*) malloc(MAX_INPUT_SIZE * sizeof(char));
+    }
+    return ret;
+}
+
+void free_command_t(command_t * to_free)
+{
+    int i;    
+    for(i = 0; i < MAX_ARG_COUNT; i++)
+    {
+        free(to_free -> argv[i]);
+    }
+	free(to_free -> argv);
+	free(to_free);
+}

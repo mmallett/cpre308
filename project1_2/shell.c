@@ -1,0 +1,289 @@
+/****************************************************************************
+* Matt Mallett
+* CprE 308
+* shell.c
+* Unix Shell
+****************************************************************************/
+
+#include "shell.h"
+
+#define MAX_INPUT_LENGTH 100
+#define MAX_ARG_COUNT 15
+
+//easier to put them here, otherwise would have to change
+//entire execute signature just for history command
+//or rework entire execute structure
+char history[100][MAX_INPUT_LENGTH];//store command history
+int history_count = 0;
+
+int main(int argc, char ** argv)
+{
+	//get command line arguments
+	int c;
+    char * pvalue = NULL;
+	while ((c = getopt (argc, argv, "p:")) != -1)
+	{
+		switch (c)
+		{
+			case 'p':
+                pvalue = optarg;
+				break;
+			default:
+				break;
+		}
+	}
+
+	int cmd_type; //enumerated value to determine how command is executed
+	int cmd_block; //whether to wait for child to exit or not
+    int cmd_argc; //number of args counted while parsing
+	char cmd_args[MAX_ARG_COUNT][MAX_INPUT_LENGTH]; //store command line args
+    char * exec_args[MAX_ARG_COUNT]; //cmd_args incompatible type with execvp
+
+	//ready prompt
+	char prompt[MAX_INPUT_LENGTH];
+	init_prompt(prompt);
+	if(pvalue != NULL)
+	{   
+		change_prompt(prompt,pvalue);
+	}
+
+	char buffer[MAX_INPUT_LENGTH]; //general purpose string buffer
+	
+	int done = 0;
+	do
+	{
+		//clear command buffer
+		int i;
+		for(i = 0; i < MAX_ARG_COUNT; i++)
+		{
+			cmd_args[i][0] = '\0';
+		}
+		//get input
+		print_prompt(prompt);
+		scanf("\n");
+		scanf("%[^\n]",buffer);
+
+		//store history
+        strcpy(history[history_count],buffer);
+        history_count++;
+
+		//tokenize
+		char * ptr = strtok(buffer," ");
+		i = 0;
+		while(ptr != NULL)
+		{
+			strcpy(cmd_args[i],ptr);
+			ptr = strtok(NULL," ");
+			i++;
+		}
+        argc = i;
+
+		//set state based on input
+		cmd_type = get_type(cmd_args[0]);
+		cmd_block = get_block(cmd_args[argc-1]);
+        int j;
+        for(j = 0; j < argc; j++)
+        {
+            exec_args[j] = cmd_args[j];
+        }
+        if(!cmd_block) //want to eliminate &
+        {
+            exec_args[argc-1] = NULL;
+        }
+        else //keep all args parsed
+        {
+            exec_args[argc] = NULL;
+        }
+        
+		//check if any children exited
+		int status, child_pid;
+		child_pid = waitpid(-1,&status,WNOHANG);
+		if(child_pid > 0)
+		{
+			get_status_str(status,child_pid,buffer);
+			print_out(buffer);
+		}
+        
+        //execute
+        done = execute(cmd_type,cmd_block,cmd_args[0],exec_args);
+
+	}while(!done);
+	return 0;
+}
+
+/*********************************************************
+* PARSING
+*********************************************************/
+
+int get_type(char * arg0)
+{
+	if(arg0 == NULL)
+	{
+		return -1;
+	}
+	if(strcmp(arg0,"") == 0)
+	{
+		return -1;
+	}
+	else if(strcmp(arg0,"cd") == 0)
+	{
+		return 1;
+	}
+	else if(strcmp(arg0,"cwd") == 0)
+	{
+		return 2;
+	}
+	else if(strcmp(arg0,"pid") == 0)
+	{
+		return 3;
+	}
+	else if(strcmp(arg0,"ppid") == 0)
+	{
+		return 4;
+	}
+	else if(strcmp(arg0,"history") == 0)
+	{
+		return 5;
+	}
+	else if(strcmp(arg0,"exit") == 0)
+	{
+		return 6;
+	}
+	else //is a path to a command
+	{
+		return 0;
+	}
+}
+
+int get_block(char * arg)
+{
+	if(arg == NULL)
+	{
+		return 0;
+	}
+	if(strcmp(arg,"&") == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+/*********************************************************
+* PRINTING
+*********************************************************/
+void init_prompt(char * prompt)
+{
+        strcpy(prompt,"308sh");
+}
+
+void change_prompt(char * prompt, char * new_prompt)
+{
+        strcpy(prompt, new_prompt);
+}
+
+void print_prompt(char * prompt)
+{
+        printf("\n%s>",prompt);
+}
+
+void print_out(char * output)
+{
+        printf(">>>%s\n",output);
+}
+
+/*********************************************************
+* EXECUTING
+*********************************************************/
+void get_status_str(int status, int pid, char * buffer)
+{
+	if(WIFEXITED(status))
+	{
+		sprintf(buffer,"Process %d exited normally", pid);
+	}
+	else if(WIFSIGNALED(status))
+	{
+		sprintf(buffer,"Process %d was terminated by a signal", pid);
+	}
+	else
+	{
+		sprintf(buffer,"Process %d exited under unknown conditions", pid);
+	}
+}
+
+int execute(int cmd_type, int cmd_block, char * filename, char *argv[])
+{   
+    int ret,count,status;
+    char buffer[MAX_INPUT_LENGTH];
+	switch(cmd_type)
+	{
+		case -1:
+			print_out("Invalid Command");
+			break;
+		case 0:
+			ret = fork();
+			if(ret == 0)
+			{
+                sprintf(buffer,"Executing child %d",getpid());
+                print_out(buffer);
+				execvp(argv[0],argv);
+				perror("Error occured in exec() call");
+				exit(1);
+			}
+			else if(ret == -1)
+			{
+				perror("Error occured in fork() call");
+			}
+			else
+			{
+				if(cmd_block){
+					waitpid(ret,&status,0);
+					get_status_str(status,ret,buffer);
+					print_out(buffer);
+				}
+			}
+			break;
+		case 1:
+			chdir(argv[1]);
+			break;
+		case 2:
+			getcwd(buffer,MAX_INPUT_LENGTH * sizeof(char));
+			print_out(buffer);
+			break;
+		case 3:
+			sprintf(buffer,"Process ID: %d", getpid());
+			print_out(buffer);
+			break;
+		case 4:
+			sprintf(buffer,"Parent Process ID: %d", getppid());
+			print_out(buffer);
+			break;
+		case 5:
+			if(argv[1] == NULL || strcmp(argv[1],"") == 0)
+			{
+				count = history_count;
+			}
+			else
+			{
+				sscanf(argv[1],"-%d",&count);
+				if(count > history_count)
+				{
+					count = history_count;
+				}
+			}
+			int j;
+			sprintf(buffer,"Printing out the last %d commands",count);
+			print_out(buffer);
+			for(j = count -1; j >= 0; j--)
+			{
+				printf("%s\n",history[j]);
+			}
+			break;
+		case 6:
+			return 1;//exit
+			break;
+	}
+    return 0;   
+}

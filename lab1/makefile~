@@ -1,0 +1,14 @@
+message: message.o message2.o message3.o
+    gcc -o message message.o message2.o message3.o
+
+message2.o: message2.c
+    gcc -O -c message2.c
+
+message3.o: message3.c
+    gcc -O -c message3.c
+
+message.o: message.c message.h
+    gcc -O -c message.c
+
+clean:
+    rm -f message message.o message2.o message3.o

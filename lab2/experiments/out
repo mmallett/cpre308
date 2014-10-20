@@ -1,0 +1,5 @@
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S 20571  8596  8592  0  75   0 - 17570 wait   pts/1    00:00:00 bash
+0 S 20571  8739  8596  0  76   0 -   917 -      pts/1    00:00:00 exp_1
+0 S 20571  8740  8596  0  76   0 -   917 -      pts/1    00:00:00 exp_1
+0 R 20571  8747  8596  0  76   0 - 15887 -      pts/1    00:00:00 ps
